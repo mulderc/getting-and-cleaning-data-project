@@ -1,0 +1,97 @@
+DATA DICTIONARY - Getting and Cleaning Data Course Project
+==========================================
+
+
+## Identififiers
+"SubjectID" [factor 1:30]  ID of the subject who performed the activity, 30 in total
+	
+"ActivityID" [factor 1:6]  ID of the activity name
+	Activity Code
+ 1            WALKING
+ 2   WALKING_UPSTAIRS
+ 3 WALKING_DOWNSTAIRS
+ 4            SITTING
+ 5           STANDING
+ 6             LAYING
+
+## Measurements
+
+"timeDomainBodyAccelerometerMeanX"                                  
+"timeDomainBodyAccelerometerMeanY"                                  
+"timeDomainBodyAccelerometerMeanZ"                                  
+"timeDomainBodyAccelerometerStandardDeviationX"                     
+"timeDomainBodyAccelerometerStandardDeviationY"                     
+"timeDomainBodyAccelerometerStandardDeviationZ"                     
+"timeDomainGravityAccelerometerMeanX"                               
+"timeDomainGravityAccelerometerMeanY"                               
+"timeDomainGravityAccelerometerMeanZ"                               
+"timeDomainGravityAccelerometerStandardDeviationX"                  
+"timeDomainGravityAccelerometerStandardDeviationY"                  
+"timeDomainGravityAccelerometerStandardDeviationZ"                  
+"timeDomainBodyAccelerometerJerkMeanX"                              
+"timeDomainBodyAccelerometerJerkMeanY"                              
+"timeDomainBodyAccelerometerJerkMeanZ"                              
+"timeDomainBodyAccelerometerJerkStandardDeviationX"                 
+"timeDomainBodyAccelerometerJerkStandardDeviationY"                 
+"timeDomainBodyAccelerometerJerkStandardDeviationZ"                 
+"timeDomainyroscopeMeanX"                                      
+"timeDomainBodyGyroscopeMeanY"                                      
+"timeDomainBodyGyroscopeMeanZ"                                      
+"timeDomainBodyGyroscopeStandardDeviationX"                         
+"timeDomainBodyGyroscopeStandardDeviationY"                         
+"timeDomainBodyGyroscopeStandardDeviationZ"                         
+"timeDomainBodyGyroscopeJerkMeanX"                                  
+"timeDomainBodyGyroscopeJerkMeanY"                                  
+"timeDomainBodyGyroscopeJerkMeanZ"                                  
+"timeDomainBodyGyroscopeJerkStandardDeviationX"                     
+"timeDomainBodyGyroscopeJerkStandardDeviationY"                     
+"timeDomainBodyGyroscopeJerkStandardDeviationZ"                     
+"timeDomainBodyAccelerometerMagnitudeMean"                          
+"timeDomainBodyAccelerometerMagnitudeStandardDeviation"             
+"timeDomainGravityAccelerometerMagnitudeMean"                       
+"timeDomainGravityAccelerometerMagnitudeStandardDeviation"          
+"timeDomainBodyAccelerometerJerkMagnitudeMean"                      
+"timeDomainBodyAccelerometerJerkMagnitudeStandardDeviation"         
+"timeDomainBodyGyroscopeMagnitudeMean"                              
+"timeDomainBodyGyroscopeMagnitudeStandardDeviation"                 
+"timeDomainBodyGyroscopeJerkMagnitudeMean"                          
+"timeDomainBodyGyroscopeJerkMagnitudeStandardDeviation"             
+"frequencyDomainBodyAccelerometerMeanX"                             
+"frequencyDomainBodyAccelerometerMeanY"                             
+"frequencyDomainBodyAccelerometerMeanZ"                             
+"frequencyDomainBodyAccelerometerStandardDeviationX"                
+"frequencyDomainBodyAccelerometerStandardDeviationY"                
+"frequencyDomainBodyAccelerometerStandardDeviationZ"                
+"frequencyDomainBodyAccelerometerMeanFrequencyX"                    
+"frequencyDomainBodyAccelerometerMeanFrequencyY"                    
+"frequencyDomainBodyAccelerometerMeanFrequencyZ"                    
+"frequencyDomainBodyAccelerometerJerkMeanX"                         
+"frequencyDomainBodyAccelerometerJerkMeanY"                         
+"frequencyDomainBodyAccelerometerJerkMeanZ"                         
+"frequencyDomainBodyAccelerometerJerkStandardDeviationX"            
+"frequencyDomainBodyAccelerometerJerkStandardDeviationY"            
+"frequencyDomainBodyAccelerometerJerkStandardDeviationZ"            
+"frequencyDomainBodyAccelerometerJerkMeanFrequencyX"                
+"frequencyDomainBodyAccelerometerJerkMeanFrequencyY"                
+"frequencyDomainBodyAccelerometerJerkMeanFrequencyZ"                
+"frequencyDomainBodyGyroscopeMeanX"                                 
+"frequencyDomainBodyGyroscopeMeanY"                                 
+"frequencyDomainBodyGyroscopeMeanZ"                                 
+"frequencyDomainBodyGyroscopeStandardDeviationX"                    
+"frequencyDomainBodyGyroscopeStandardDeviationY"                    
+"frequencyDomainBodyGyroscopeStandardDeviationZ"                    
+"frequencyDomainBodyGyroscopeMeanFrequencyX"                        
+"frequencyDomainBodyGyroscopeMeanFrequencyY"                        
+"frequencyDomainBodyGyroscopeMeanFrequencyZ"                        
+"frequencyDomainBodyAccelerometerMagnitudeMean"                     
+"frequencyDomainBodyAccelerometerMagnitudeStandardDeviation"        
+"frequencyDomainBodyAccelerometerMagnitudeMeanFrequency"            
+"frequencyDomainBodyBodyAccelerometerJerkMagnitudeMean"             
+"frequencyDomainBodyBodyAccelerometerJerkMagnitudeStandardDeviation"
+"frequencyDomainBodyBodyAccelerometerJerkMagnitudeMeanFrequency"    
+"frequencyDomainBodyBodyGyroscopeMagnitudeMean"                     
+"frequencyDomainBodyBodyGyroscopeMagnitudeStandardDeviation"        
+"frequencyDomainBodyBodyGyroscopeMagnitudeMeanFrequency"            
+"frequencyDomainBodyBodyGyroscopeJerkMagnitudeMean"                 
+"frequencyDomainBodyBodyGyroscopeJerkMagnitudeStandardDeviation"    
+"frequencyDomainBodyBodyGyroscopeJerkMagnitudeMeanFrequency"

@@ -1,86 +1,96 @@
+#script for "getting and cleaning data" course on cousera
+
+# 0. download and unzip data into working dirctory
+
+URL      <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
+DataFile <- "UCIHARDataset.zip"
+download.file(URL, DataFile)
+unzip(DataFile)
+
 # 1. Merges the training and the test sets to create one data set.
 
+# 1.1 read in activcity labels and "features"
 
-#read in data files
-Features       = read.table('UCI HAR Dataset/features.txt'           ,header=FALSE)
-ActivityLabels = read.table('UCI HAR Dataset/activity_labels.txt'    ,header=FALSE)
-SubjectTrain   = read.table('UCI HAR Dataset/train/subject_train.txt',header=FALSE)
-TrainX         = read.table('UCI HAR Dataset/train/x_train.txt'      ,header=FALSE)
-TrainY         = read.table('UCI HAR Dataset/train/y_train.txt'      ,header=FALSE)
-SubjectTest    = read.table('UCI HAR Dataset/test/subject_test.txt'  ,header=FALSE)
-TestX          = read.table('UCI HAR Dataset/test/x_test.txt'        ,header=FALSE)
-TestY          = read.table('UCI HAR Dataset/test/y_test.txt'        ,header=FALSE)
+activity_labels = read.table("UCI HAR Dataset/activity_labels.txt",
+                             header=FALSE, 
+                             col.names = c("ActivityLevels","ActivityLabels"))
+features        = read.table("UCI HAR Dataset/features.txt",
+                             header=FALSE)
 
-#Add variable names to data frames
-names(ActivityLabels) = c('ActivityID','ActivityType')
-names(SubjectTrain)   = "SubjectID"
-names(TrainX)         = Features[,2] 
-names(TrainY)         = "ActivityID"
-names(SubjectTest)    = "SubjectID"
-names(TestX)          = Features[,2]
-names(TestY)          = "ActivityID"
+# 1.2 read in training and test data and apply column names
+subject_train   = read.table("UCI HAR Dataset/train/subject_train.txt",
+                             header=FALSE, 
+                             col.names = "ParticipantID")
+x_train         = read.table("UCI HAR Dataset/train/x_train.txt",
+                             header=FALSE,)
+names(x_train)  = features[,2]
+y_train         = read.table("UCI HAR Dataset/train/y_train.txt",
+                             header=FALSE, 
+                             col.names = "Activity")
+data_train      = cbind(subject_train,x_train,y_train)
+subject_test    = read.table("UCI HAR Dataset/test/subject_test.txt",
+                             header=FALSE, 
+                             col.names = "ParticipantID")
+x_test          = read.table("UCI HAR Dataset/test/x_test.txt",
+                             header=FALSE)
+names(x_test)   = features[,2]
+y_test          = read.table("UCI HAR Dataset/test/y_test.txt",
+                             header=FALSE, 
+                             col.names = "Activity")
+data_test       = cbind(subject_test,x_test,y_test)
 
-#bind together test and training data
-TrainData = cbind(SubjectTrain,TrainX,TrainY)
-TestData  = cbind(SubjectTest,TestX,TestY)
-
-#Merge together test and training data
-MergedData = rbind(TrainData,TestData)
-
-
+# 1.3 merge testing and training data
+data_merged = rbind(data_train,data_test)
 
 # 2. Extract only the measurements on the mean and standard deviation for each measurement. 
+# 2.1 Get names for the columns
+ColumnNames = names(data_merged)
 
-#Get names for the columns
-ColumnNames  = names(MergedData)
+# 2.2 Make a TRUE/FALSE vector for the Activity, ParticipantID, mean, and std columns
+ColumnsToKeep = (grepl("Activity"      ,ColumnNames) | 
+                 grepl("ParticipantID" ,ColumnNames) | 
+                 grepl("mean"          ,ColumnNames) | 
+                 grepl("std"           ,ColumnNames) )
 
-# Create a vector that contains TRUE values for the ActivityID, SubjectID, mean() & std() columns and FALSE for others
-LogicalVector = (grepl("ActivityID",ColumnNames) | 
-                 grepl("SubjectID" ,ColumnNames) | 
-                 grepl("mean()"    ,ColumnNames) | 
-                 grepl("std()"     ,ColumnNames) )
-
-
-# Subset finalData table based on the logicalVector to keep only desired columns
-FinalData = MergedData[LogicalVector == TRUE]
+# 2.3 Subset data frame based on ColumnsToKeep to keep only necessary columns
+Data = data_merged[ColumnsToKeep == TRUE]
 
 # 3. Use descriptive activity names to name the activities in the data set
+# 3.1 eplace activity values with activity labels as factors
+Data$Activity <- factor(Data$Activity, 
+                        levels = activity_labels$ActivityLevels, 
+                        labels = activity_labels$ActivityLabels)
 
-# Merge the finalData set with the acitivityType table to include descriptive activity names
-#finalData = merge(DataSubset,ActivityLabels,by='ActivityID',all.x=TRUE);
+# Upaate of ColumnNames so we can use gsub to make better names
+ColumnNames  = names(Data) 
 
-# replace activity values with named factor levels
-FinalData$ActivityID <- factor(FinalData$ActivityID, 
-                                 levels = ActivityLabels[, 1], labels = ActivityLabels[, 2])
-# Updating the colNames vector to include the new column names after merge
-ColNames  = colnames(FinalData); 
+# 4.Appropriately label the data set with descriptive activity names. 
 
-# 4. Appropriately label the data set with descriptive activity names. 
+ColumnNames <- gsub("[[:punct:]]" ,""                  ,ColumnNames)
+ColumnNames <- gsub("^t"          ,"TimeDomain"        ,ColumnNames)
+ColumnNames <- gsub("^f"          ,"FrequencyDomain"   ,ColumnNames)
+ColumnNames <- gsub("Acc"         ,"Accelerometer"     ,ColumnNames)
+ColumnNames <- gsub("Gyro"        ,"Gyroscope"         ,ColumnNames)
+ColumnNames <- gsub("Mag"         ,"Magnitude"         ,ColumnNames)
+ColumnNames <- gsub("Freq"        ,"Frequency"         ,ColumnNames)
+ColumnNames <- gsub("std"         ,"StandardDeviation" ,ColumnNames)
 
-ColNames <- gsub("[\\(\\)-]", "",            ColNames)
-ColNames <- gsub("^f", "frequencyDomain",    ColNames)
-ColNames <- gsub("^t", "timeDomain",         ColNames)
-ColNames <- gsub("Acc", "Accelerometer",     ColNames)
-ColNames <- gsub("Gyro", "Gyroscope",        ColNames)
-ColNames <- gsub("Mag", "Magnitude",         ColNames)
-ColNames <- gsub("Freq", "Frequency",        ColNames)
-ColNames <- gsub("mean", "Mean",             ColNames)
-ColNames <- gsub("std", "StandardDeviation", ColNames)
-ColNames <- gsub("BodyBody", "Body",         ColNames)
-
-
-
-# Reassigning the new descriptive column names to the finalData set
-colnames(FinalData) = ColNames;
+# 4.1 Reassigning the new descriptive column names to the Data set
+names(Data) = ColumnNames
 
 # 5. Create a second, independent tidy data set with the average of each variable for each activity and each subject. 
+# 5.1 installing Tidyverse package for this step
+install.packages("tidyverse")
+library(tidyverse)
 
-# New Tidy DataFrame, finalDataNoActivityType without the activityType column
-FinalDataTidy <- FinalData %>% 
-  group_by(SubjectID, ActivityID) %>%
-  summarise_each(funs(mean))
+# 5.2 New data frame in tidy data format,
+IndependentTidyDataSet <- Data %>% 
+  group_by(ParticipantID, Activity) %>%
+  summarise_all(list(mean))
 
-# output "tidy_data.txt"
-write.table(FinalDataTidy, "tidy_data.txt", row.names = FALSE, 
-            quote = FALSE)
 
+# 5.3 output "DataTidy.txt"
+write.table(IndependentTidyDataSet, 
+              file = "IndependentTidyDataSet.txt", 
+              row.names = FALSE, 
+              quote     = FALSE)

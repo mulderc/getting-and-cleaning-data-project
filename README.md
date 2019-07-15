@@ -30,4 +30,4 @@ The data used in this script can be found at http://archive.ics.uci.edu/ml/datas
 
 The Code Book
 -------------
-`CODEBOOK.md` file describes the variables found in tidy_data.txt.
+`CODEBOOK.md` file describes the variables found in IndependentTidyDataSet.txt.
